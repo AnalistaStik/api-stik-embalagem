@@ -22,18 +22,18 @@ import os
 
 def create_connection():
     try:
-        # Fallback para valores padrão caso variáveis não estejam definidas no ambiente
-        host = os.environ.get("PGHOST", "postgres.railway.internal")
+        # Usa variáveis de ambiente ou valores default (em Docker, todas vêm via -e)
+        host = os.environ["PGHOST"]
         port = os.environ.get("PGPORT", "5432")
-        dbname = os.environ.get("PGDATABASE", "railway")
-        user = os.environ.get("PGUSER", "postgres")
-        password = os.environ.get("PGPASSWORD", "147258369")  
+        dbname = os.environ["PGDATABASE"]
+        user = os.environ["PGUSER"]
+        password = os.environ["PGPASSWORD"]
 
-        print("🔍 Conectando com variáveis:")
-        print("HOST:", host)
-        print("PORT:", port)
-        print("DB:", dbname)
-        print("USER:", user)
+        print("🔍 Conectando ao PostgreSQL:")
+        print(f"HOST: {host}")
+        print(f"PORT: {port}")
+        print(f"DB: {dbname}")
+        print(f"USER: {user}")
         print("PWD: [oculto por segurança]")
 
         conn = psycopg2.connect(
@@ -45,7 +45,10 @@ def create_connection():
         )
         print("✅ Conexão estabelecida com sucesso.")
         return conn
-    except psycopg2.Error as e:
+
+    except Exception as e:
+        import traceback
         print("❌ ERRO AO CONECTAR AO POSTGRESQL:")
-        print(f'{str(e)}')
+        traceback.print_exc()
         return None
+
