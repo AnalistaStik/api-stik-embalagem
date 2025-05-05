@@ -22,6 +22,13 @@ import os
 
 def create_connection():
     try:
+        print("🔍 Conectando com variáveis:")
+        print("HOST:", os.environ.get("PGHOST"))
+        print("PORT:", os.environ.get("PGPORT"))
+        print("DB:", os.environ.get("PGDATABASE"))
+        print("USER:", os.environ.get("PGUSER"))
+        print("PWD:", os.environ.get("PGPASSWORD"))
+
         conn = psycopg2.connect(
             host=os.environ.get("PGHOST"),
             port=os.environ.get("PGPORT"),
@@ -31,5 +38,5 @@ def create_connection():
         )
         return conn
     except psycopg2.Error as e:
-        print(f'Erro ao conectar ao banco de dados PostgreSQL: {str(e)}')
+        print(f'❌ Erro ao conectar ao banco de dados PostgreSQL: {str(e)}')
         return None
