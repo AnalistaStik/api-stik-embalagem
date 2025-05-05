@@ -22,21 +22,30 @@ import os
 
 def create_connection():
     try:
+        # Fallback para valores padrão caso variáveis não estejam definidas no ambiente
+        host = os.environ.get("PGHOST", "postgres.railway.internal")
+        port = os.environ.get("PGPORT", "5432")
+        dbname = os.environ.get("PGDATABASE", "railway")
+        user = os.environ.get("PGUSER", "postgres")
+        password = os.environ.get("PGPASSWORD", "PqEWJhSxpSLBuuTUqfZYFdbgvxoWoKVA")  # ⚠️ Substitua aqui pela sua senha real, se necessário
+
         print("🔍 Conectando com variáveis:")
-        print("HOST:", os.environ.get("PGHOST"))
-        print("PORT:", os.environ.get("PGPORT"))
-        print("DB:", os.environ.get("PGDATABASE"))
-        print("USER:", os.environ.get("PGUSER"))
-        print("PWD:", os.environ.get("PGPASSWORD"))
+        print("HOST:", host)
+        print("PORT:", port)
+        print("DB:", dbname)
+        print("USER:", user)
+        print("PWD: [oculto por segurança]")
 
         conn = psycopg2.connect(
-            host=os.environ.get("PGHOST"),
-            port=os.environ.get("PGPORT"),
-            dbname=os.environ.get("PGDATABASE"),
-            user=os.environ.get("PGUSER"),
-            password=os.environ.get("PGPASSWORD")
+            host=host,
+            port=port,
+            dbname=dbname,
+            user=user,
+            password=password
         )
+        print("✅ Conexão estabelecida com sucesso.")
         return conn
     except psycopg2.Error as e:
-        print(f'❌ Erro ao conectar ao banco de dados PostgreSQL: {str(e)}')
+        print("❌ ERRO AO CONECTAR AO POSTGRESQL:")
+        print(f'{str(e)}')
         return None
