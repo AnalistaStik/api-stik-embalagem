@@ -42,6 +42,10 @@ def registrar():
     else:
         return jsonify({'success': False, 'message': 'Erro ao inserir registro'}), 500
 
+# if __name__ == '__main__':
+#     # Inicia o Flask
+#     app.run(host='0.0.0.0', port=5000, debug=False)
+    
 if __name__ == '__main__':
-    # Inicia o Flask
-    app.run(host='0.0.0.0', port=5000, debug=False)
+    port = int(os.environ.get("PORT", 5000))  # <- porta dinâmica para Railway
+    app.run(host='0.0.0.0', port=port)
