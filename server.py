@@ -27,7 +27,7 @@ def create_connection():
         port = os.environ.get("PGPORT", "5432")
         dbname = os.environ.get("PGDATABASE", "railway")
         user = os.environ.get("PGUSER", "postgres")
-        password = os.environ.get("PGPASSWORD", "PqEWJhSxpSLBuuTUqfZYFdbgvxoWoKVA")  # ⚠️ Substitua aqui pela sua senha real, se necessário
+        password = os.environ.get("PGPASSWORD", "Dg9vXr34!pKwZtM7")  # ⚠️ Substitua aqui pela sua senha real, se necessário
 
         print("🔍 Conectando com variáveis:")
         print("HOST:", host)
