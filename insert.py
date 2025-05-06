@@ -75,6 +75,38 @@
 #         print(f"❌ Erro ao inserir no banco: {e}")
 #         return False
 
+# import traceback
+
+# def insert_data(conn, data):
+#     try:
+#         print(f"📥 Dados recebidos: {data}")
+#         cursor = conn.cursor()
+
+#         query = """
+#         INSERT INTO registros (data, ordem_producao, quantidade, artigo, cor, peso, conferente, turno)
+#         VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+#         """
+
+#         values = (
+#             data['data'],  # ← Usa string pura 'YYYY-MM-DD' sem .date()
+#             data['ordem_producao'],
+#             data['quantidade'],
+#             data['artigo'],
+#             data['cor'],
+#             data['peso'],
+#             data['conferente'],
+#             data['turno']
+#         )
+
+#         cursor.execute(query, values)
+#         conn.commit()
+#         print("✅ Inserção feita com sucesso.")
+#         return True
+#     except Exception as e:
+#         traceback.print_exc()
+#         print(f"❌ Erro ao inserir no banco: {e}")
+#         return False
+
 import traceback
 
 def insert_data(conn, data):
@@ -82,13 +114,12 @@ def insert_data(conn, data):
         print(f"📥 Dados recebidos: {data}")
         cursor = conn.cursor()
 
-        query = """
+        query = f"""
         INSERT INTO registros (data, ordem_producao, quantidade, artigo, cor, peso, conferente, turno)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        VALUES (DATE '{data['data']}', %s, %s, %s, %s, %s, %s, %s)
         """
 
         values = (
-            data['data'],  # ← Usa string pura 'YYYY-MM-DD' sem .date()
             data['ordem_producao'],
             data['quantidade'],
             data['artigo'],
@@ -102,10 +133,12 @@ def insert_data(conn, data):
         conn.commit()
         print("✅ Inserção feita com sucesso.")
         return True
+
     except Exception as e:
         traceback.print_exc()
         print(f"❌ Erro ao inserir no banco: {e}")
         return False
+
 
 
 
