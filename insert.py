@@ -27,7 +27,8 @@
 #         print(f"❌ Erro ao inserir no banco: {e}")
 #         return False
 
-from datetime import datetime
+from datetime import datetime, date
+import traceback
 
 def insert_data(conn, data):
     try:
@@ -39,8 +40,21 @@ def insert_data(conn, data):
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
         """
 
+        # Garantir que a data esteja no formato correto (date)
+        data_bruta = data['data']
+        print(f"👉 data['data']: {data_bruta} ({type(data_bruta)})")
+
+        if isinstance(data_bruta, str):
+            data_convertida = datetime.strptime(data_bruta, "%Y-%m-%d").date()
+        elif isinstance(data_bruta, datetime):
+            data_convertida = data_bruta.date()
+        elif isinstance(data_bruta, date):
+            data_convertida = data_bruta
+        else:
+            raise ValueError(f"Formato inválido para campo 'data': {data_bruta}")
+
         values = (
-            datetime.strptime(data['data'], "%Y-%m-%d").date(),  # <- FORÇA tipo DATE
+            data_convertida,
             data['ordem_producao'],
             data['quantidade'],
             data['artigo'],
@@ -54,9 +68,12 @@ def insert_data(conn, data):
         conn.commit()
         print("✅ Inserção feita com sucesso.")
         return True
+
     except Exception as e:
+        traceback.print_exc()
         print(f"❌ Erro ao inserir no banco: {e}")
         return False
+
 
 
 
