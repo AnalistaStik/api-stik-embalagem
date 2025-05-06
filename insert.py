@@ -120,10 +120,9 @@ def insert_data(conn, data):
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
         """
 
-        # Força meio-dia no horário local antes de extrair a data
-        dt = datetime.strptime(data['data'], "%Y-%m-%d")
-        dt_com_meiodia = dt.replace(hour=12)
-        data_corrigida = dt_com_meiodia.date()  # Garantido: não cai no dia anterior
+        # Corrige o UTC forçado do PostgreSQL somando 1 dia
+        data_recebida = datetime.strptime(data['data'], "%Y-%m-%d").date()
+        data_corrigida = data_recebida + timedelta(days=1)
 
         values = (
             data_corrigida,
@@ -145,6 +144,7 @@ def insert_data(conn, data):
         traceback.print_exc()
         print(f"❌ Erro ao inserir no banco: {e}")
         return False
+
 
 
 
