@@ -7,8 +7,6 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-# Token fixo da API
-API_TOKEN = "MYMdxnidNv88wkuojg4m62kquXHtaWgJ"
 
 # Conexão com o banco
 conn = create_connection()
@@ -22,15 +20,9 @@ else:
 def home():
     return "API Stik - Desenvolvido por João Paulo Bezerra"
 
-# Rota POST de registro
+# Rota POST de registro (sem autenticação por token)
 @app.route('/registrar', methods=['POST'])
 def registrar():
-    auth = request.headers.get("Authorization")
-    print("🔍 Header Authorization recebido:", auth)
-    
-    if not auth or auth != f"Bearer {API_TOKEN}":
-        return jsonify({'success': False, 'message': 'Não autorizado'}), 401
-
     data = request.get_json()
     print('📥 Dados recebidos:', data)
 
