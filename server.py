@@ -23,7 +23,7 @@ import os
 def create_connection():
     try:
         host = os.environ.get("PGHOST", "localhost")
-        port = os.environ.get("PGPORT", "5432")
+        port = os.environ.get("PGPORT", "19369")
         dbname = os.environ.get("PGDATABASE", "railway")
         user = os.environ.get("PGUSER", "postgres")
         password = os.environ.get("PGPASSWORD", "")
