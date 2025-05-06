@@ -17,37 +17,19 @@
 #         print(f'Erro ao conectar ao banco de dados: {str(e)}')
 #         return None
 
-import psycopg2
+import pymssql
 
 def create_connection():
     try:
-        # 🔒 Dados fixos do Railway (somente para teste)
-        host = "shortline.proxy.rlwy.net"
-        port = "19369"
-        dbname = "railway"
-        user = "postgres"
-        password = "PqEWJhSxpSLBuuTUqfZYFdbgvxoWoKVA"
-
-        print("🔍 Conectando ao PostgreSQL:")
-        print(f"HOST: {host}")
-        print(f"PORT: {port}")
-        print(f"DB: {dbname}")
-        print(f"USER: {user}")
-        print("PWD: [oculto por segurança]")
-
-        conn = psycopg2.connect(
-            host=host,
-            port=port,
-            dbname=dbname,
-            user=user,
-            password=password
+        return pymssql.connect(
+            server='168.190.30.18',
+            user='sa',
+            password='Stik0123',
+            database='PMP'
         )
-        print("✅ Conexão estabelecida com sucesso.")
-        return conn
-
     except Exception as e:
-        import traceback
-        print("❌ ERRO AO CONECTAR AO POSTGRESQL:")
-        traceback.print_exc()
+        print(f'Erro na conexão: {e}')
         return None
+
+
 
