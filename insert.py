@@ -107,6 +107,7 @@
 #         print(f"❌ Erro ao inserir no banco: {e}")
 #         return False
 
+from datetime import datetime, timedelta
 import traceback
 
 def insert_data(conn, data):
@@ -114,12 +115,18 @@ def insert_data(conn, data):
         print(f"📥 Dados recebidos: {data}")
         cursor = conn.cursor()
 
-        query = f"""
+        query = """
         INSERT INTO registros (data, ordem_producao, quantidade, artigo, cor, peso, conferente, turno)
-        VALUES (DATE '{data['data']}', %s, %s, %s, %s, %s, %s, %s)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
         """
 
+        # Força meio-dia no horário local antes de extrair a data
+        dt = datetime.strptime(data['data'], "%Y-%m-%d")
+        dt_com_meiodia = dt.replace(hour=12)
+        data_corrigida = dt_com_meiodia.date()  # Garantido: não cai no dia anterior
+
         values = (
+            data_corrigida,
             data['ordem_producao'],
             data['quantidade'],
             data['artigo'],
@@ -138,6 +145,7 @@ def insert_data(conn, data):
         traceback.print_exc()
         print(f"❌ Erro ao inserir no banco: {e}")
         return False
+
 
 
 
