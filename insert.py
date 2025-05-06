@@ -45,7 +45,8 @@ def insert_data(conn, data):
         print(f"👉 data['data']: {data_bruta} ({type(data_bruta)})")
 
         if isinstance(data_bruta, str):
-            data_convertida = datetime.strptime(data_bruta, "%Y-%m-%d").date()
+            #data_convertida = datetime.strptime(data_bruta, "%Y-%m-%d").date()
+            data_convertida = datetime.strptime(data_bruta, "%Y-%m-%d")
         elif isinstance(data_bruta, datetime):
             data_convertida = data_bruta.date()
         elif isinstance(data_bruta, date):
