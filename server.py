@@ -22,12 +22,11 @@ import os
 
 def create_connection():
     try:
-        # Usa variáveis de ambiente ou valores default (em Docker, todas vêm via -e)
-        host = os.environ["PGHOST"]
+        host = os.environ.get("PGHOST", "localhost")
         port = os.environ.get("PGPORT", "5432")
-        dbname = os.environ["PGDATABASE"]
-        user = os.environ["PGUSER"]
-        password = os.environ["PGPASSWORD"]
+        dbname = os.environ.get("PGDATABASE", "railway")
+        user = os.environ.get("PGUSER", "postgres")
+        password = os.environ.get("PGPASSWORD", "")
 
         print("🔍 Conectando ao PostgreSQL:")
         print(f"HOST: {host}")
@@ -51,4 +50,5 @@ def create_connection():
         print("❌ ERRO AO CONECTAR AO POSTGRESQL:")
         traceback.print_exc()
         return None
+
 

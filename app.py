@@ -7,27 +7,27 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-# Estabelece a conexão com o banco de dados
-conn = create_connection()
-
+# Token fixo da API
 API_TOKEN = "MYMdxnidNv88wkuojg4m62kquXHtaWgJ"
 
-# Teste de conexão
+# Conexão com o banco
+conn = create_connection()
 if conn:
-    print('Conexão com o banco de dados estabelecida com sucesso.')
+    print('✅ Conexão com o banco de dados estabelecida com sucesso.')
 else:
-    print('Falha ao estabelecer conexão com o banco de dados.')
+    print('❌ Falha ao estabelecer conexão com o banco de dados.')
 
-# Rota inicial
+# Rota GET inicial
 @app.route('/', methods=['GET'])
 def home():
     return "API Stik - Desenvolvido por João Paulo Bezerra"
 
-# Rota para registrar dados
+# Rota POST de registro
 @app.route('/registrar', methods=['POST'])
 def registrar():
     auth = request.headers.get("Authorization")
     print("🔍 Header Authorization recebido:", auth)
+    
     if not auth or auth != f"Bearer {API_TOKEN}":
         return jsonify({'success': False, 'message': 'Não autorizado'}), 401
 
@@ -43,10 +43,7 @@ def registrar():
     else:
         return jsonify({'success': False, 'message': 'Erro ao inserir registro'}), 500
 
-# if __name__ == '__main__':
-#     # Inicia o Flask
-#     app.run(host='0.0.0.0', port=5000, debug=False)
-    
+# Execução local e em deploy
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))  # <- porta dinâmica para Railway
+    port = int(os.environ.get("PORT", 5000))  # Railway define a porta via variável
     app.run(host='0.0.0.0', port=port)
