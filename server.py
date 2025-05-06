@@ -18,15 +18,15 @@
 #         return None
 
 import psycopg2
-import os
 
 def create_connection():
     try:
-        host = os.environ.get("PGHOST", "localhost")
-        port = os.environ.get("PGPORT", "19369")
-        dbname = os.environ.get("PGDATABASE", "railway")
-        user = os.environ.get("PGUSER", "postgres")
-        password = os.environ.get("PGPASSWORD", "")
+        # 🔒 Dados fixos do Railway (somente para teste)
+        host = "shortline.proxy.rlwy.net"
+        port = "19369"
+        dbname = "railway"
+        user = "postgres"
+        password = "PqEWJhSxpSLBuuTUqfZYFdbgvxoWoKVA"
 
         print("🔍 Conectando ao PostgreSQL:")
         print(f"HOST: {host}")
@@ -50,5 +50,4 @@ def create_connection():
         print("❌ ERRO AO CONECTAR AO POSTGRESQL:")
         traceback.print_exc()
         return None
-
 
