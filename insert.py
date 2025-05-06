@@ -4,7 +4,7 @@ def insert_data(conn, data):
         cursor = conn.cursor()
 
         query = """
-        INSERT INTO Registros (data, ordem_producao, quantidade, artigo, cor, peso, conferente, turno)
+        INSERT INTO registros (data, ordem_producao, quantidade, artigo, cor, peso, conferente, turno)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
         """
 

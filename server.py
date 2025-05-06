@@ -17,19 +17,22 @@
 #         print(f'Erro ao conectar ao banco de dados: {str(e)}')
 #         return None
 
-import pymssql
+import psycopg2
 
 def create_connection():
     try:
-        return pymssql.connect(
-            server='168.190.30.18',
-            user='sa',
-            password='Stik0123',
-            database='PMP'
+        conn = psycopg2.connect(
+            host='shortline.proxy.rlwy.net',
+            dbname='railway',
+            user='postgres',
+            password='PqEWJhSxpSLBuuTUqfZYFdbgvxoWoKVA',
+            port=19369
         )
+        return conn
     except Exception as e:
         print(f'Erro na conexão: {e}')
         return None
+
 
 
 
