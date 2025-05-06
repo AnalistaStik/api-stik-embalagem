@@ -5,7 +5,7 @@ def insert_data(conn, data):
 
         query = """
         INSERT INTO Registros (data, ordem_producao, quantidade, artigo, cor, peso, conferente, turno)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
         """
 
         values = (
